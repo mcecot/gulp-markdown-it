@@ -11,7 +11,7 @@ ERRS =
   STREAM:
     'stream content is not supported'
   PRESET:
-    '[Error: Wrong `markdown-it` preset "wrong", check name]'
+    "Error: Wrong `markdown-it` preset \"wrong\", check name"
 
 # SUT
 markdownIt = require '../'
@@ -129,10 +129,7 @@ describe 'gulp-markdown-it', ->
               preset: 'wrong'
             })
           catch e
-            console.log "!!!" + e
-            #should(e.plugin).equal PLUGIN_NAME
-            #[Error: Wrong `markdown-it` preset "wrong", check name]
-            should( e ).equal ERRS.PRESET
+            should( e.toString() ).equal ERRS.PRESET
             done()
 
       describe 'are emitted', ->

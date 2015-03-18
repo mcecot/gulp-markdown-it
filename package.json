@@ -3,12 +3,15 @@
   "version": "0.0.0",
   "description": "A plugin for gulp to render markdown with markdown-it",
   "keywords": [
-    "gulpplugin"
+    "gulp",
+    "gulpplugin",
+    "markdown",
+    "markdown-it"
   ],
   "repository": "mcecot/gulp-markdown-it",
   "author": {
-    "name": "",
-    "email": "",
+    "name": "markus cecot",
+    "email": "mail@cecot.de",
     "url": ""
   },
   "files": ["index.js"],
