@@ -1,0 +1,10 @@
+{
+  "generator-gulpplugin-coffee": {
+    "githubUser": "mcecot",
+    "pluginName": "markdown-it",
+    "appname": "gulp-markdown-it",
+    "realname": null,
+    "email": null,
+    "homepage": null
+  }
+}

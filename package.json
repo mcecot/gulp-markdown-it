@@ -1,0 +1,42 @@
+{
+  "name": "gulp-markdown-it",
+  "version": "0.0.0",
+  "description": "A plugin for gulp to render markdown with markdown-it",
+  "keywords": [
+    "gulpplugin"
+  ],
+  "repository": "mcecot/gulp-markdown-it",
+  "author": {
+    "name": "",
+    "email": "",
+    "url": ""
+  },
+  "files": ["index.js"],
+  "scripts": {
+    "prepublish": "gulp coffee --require coffee-script/register",
+    "test": "coffeelint gulpfile.coffee index.coffee test -f ./coffeelint.json && istanbul test _mocha --report lcovonly -- ./test/*.coffee --require coffee-script/register --reporter spec",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+  },
+  "dependencies": {
+    "gulp-util": "^3.0.0",
+    "through2": "^0.6.1",
+    "markdown-it": "^4.0.1"
+  },
+  "devDependencies": {
+    "coffee-script": "^1.7.1",
+    "coffeelint": "^1.4.0",
+    "mocha": "^1.17.0",
+    "istanbul": "^0.2.3",
+    "should": "^4.0.4",
+    "coveralls": "^2.8.0",
+    "gulp": "^3.5.2",
+    "gulp-util": "^3.0.4",
+    "gulp-coffee": "^2.1.2",
+    "del": "^0.1.2"
+  },
+  "engines": {
+    "node": ">=0.10.0",
+    "npm": ">=1.3.7"
+  },
+  "license": "MIT"
+}
