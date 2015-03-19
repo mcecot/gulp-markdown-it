@@ -14,7 +14,9 @@
     "email": "mail@cecot.de",
     "url": ""
   },
-  "files": ["index.js"],
+  "files": [
+    "index.js"
+  ],
   "scripts": {
     "prepublish": "gulp coffee --require coffee-script/register",
     "test": "coffeelint gulpfile.coffee index.coffee test -f ./coffeelint.json && istanbul test _mocha --report lcovonly -- ./test/*.coffee --require coffee-script/register --reporter spec",
@@ -28,14 +30,14 @@
   "devDependencies": {
     "coffee-script": "^1.7.1",
     "coffeelint": "^1.4.0",
-    "mocha": "^1.17.0",
-    "istanbul": "^0.2.3",
-    "should": "^4.0.4",
     "coveralls": "^2.8.0",
+    "del": "^1.1.1",
     "gulp": "^3.5.2",
-    "gulp-util": "^3.0.4",
     "gulp-coffee": "^2.1.2",
-    "del": "^0.1.2"
+    "gulp-util": "^3.0.4",
+    "istanbul": "^0.3.8",
+    "mocha": "^2.2.1",
+    "should": "^5.2.0"
   },
   "engines": {
     "node": ">=0.10.0",
