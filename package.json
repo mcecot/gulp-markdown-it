@@ -1,6 +1,6 @@
 {
   "name": "gulp-markdown-it",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A plugin for gulp to render markdown with markdown-it",
   "keywords": [
     "gulp",

@@ -12,17 +12,18 @@ gulp.task 'coffee', ->
 
 # remove `index.js` and `coverage` dir
 gulp.task 'clean', (cb) ->
-  del ['index.js', 'coverage'], cb
+  del ['dist', 'coverage', 'temp'], cb
 
 # run tests
 gulp.task 'test', ['coffee'], ->
   spawn 'npm', ['test'], stdio: 'inherit'
 
-# run `gulp-markdown-it` for testing purposes
-gulp.task 'gulp-markdown-it', ->
+# run `md` for testing purposes
+gulp.task 'md', ->
   markdownIt = require './index.coffee'
-  gulp.src('./{,test/,test/fixtures/}*.coffee')
+  gulp.src('./{,test/,test/fixtures/}*.md')
     .pipe(markdownIt())
+    .pipe(gulp.dest './temp')
 
 # start workflow
 gulp.task 'default', ['coffee'], ->
