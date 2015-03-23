@@ -2,7 +2,23 @@ del     = require 'del'
 gulp    = require 'gulp'
 coffee  = require 'gulp-coffee'
 gutil   = require 'gulp-util'
+bump    = require 'gulp-bump'
+git     = require 'gulp-git'
+tag     = require 'gulp-tag-version'
 {spawn} = require 'child_process'
+
+inc = (importance) ->
+  # get all the files to bump version in
+  return gulp.src './package.json'
+    # bump the version number in those files
+    .pipe bump({type: importance})
+    # save it back to filesystem
+    .pipe gulp.dest('./')
+    # commit the changed version number
+    .pipe git.commit('bumps package version')
+    # **tag it in the repository**
+    .pipe tag()
+
 
 # compile `index.coffee`
 gulp.task 'coffee', ->
@@ -28,5 +44,14 @@ gulp.task 'md', ->
 # start workflow
 gulp.task 'default', ['coffee'], ->
   gulp.watch ['./{,test/,test/fixtures/}*.coffee'], ['test']
+
+gulp.task 'patch', ->
+  inc 'patch'
+
+gulp.task 'feature', ->
+  inc 'minor'
+
+gulp.task 'release', ->
+  inc 'major'
 
 # Generated on 2015-03-17 using generator-gulpplugin-coffee 0.1.2

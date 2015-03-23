@@ -1,19 +1,23 @@
 'use strict'
-through = require 'through2'
-gutil = require 'gulp-util'
+through       = require 'through2'
+_             = require 'underscore'
+gutil         = require 'gulp-util'
 {PluginError} = gutil
 markdownIt  = require 'markdown-it'
 
-createPluginError = (message) ->
-  new PluginError 'gulp-markdown-it', message
+markdownItPlugin = (options = {}) ->
+  default_opt =
+    preset: 'default'
+    plugins: []
+    options: {}
+  options = _.extend default_opt, options
+  md      = markdownIt(options.preset,options.options)
+  for plugin in options.plugins
+    if(typeof plugin == "string")
+      md.use require(plugin)
+    else if (plugin.constructor == Array && plugin.length == 2)
+      md.use require(plugin[0]), plugin[1]
 
-markdownItPlugin = (opt = {}) ->
-  preset = opt.preset ? 'default'
-  plugins = opt.plugins ? []
-  options = opt.options ? {}
-  md = markdownIt(preset,options)
-  for plugin in plugins
-    md.use(require plugin)
   through.obj (file, encoding, callback) ->
 
     if file.isNull() || file.content == null

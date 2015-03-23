@@ -101,9 +101,7 @@ describe 'gulp-markdown-it', ->
 
     it 'should use options', (done) ->
       dataCounter = 0
-
       fakeFile = createFakeFile('(c)')
-
       stream = markdownIt
         options:
           typographer: true
@@ -116,6 +114,39 @@ describe 'gulp-markdown-it', ->
 
       stream.once 'end', ->
         dataCounter.should.equal 1
+        done()
+
+      stream.write fakeFile
+      stream.end()
+
+    it 'should optionally activate plugins', (done) ->
+      fakeFile = createFakeFile('[X] check')
+      stream = markdownIt({
+        plugins: ['markdown-it-checkbox']
+      })
+
+      stream.on 'data', (newFile) ->
+        newFile.contents.toString().should.equal(
+          '<p><input type="checkbox" id="checkbox0" checked="true">'+
+          '<label for="checkbox0">check</label></p>\n'
+        )
+        done()
+
+      stream.write fakeFile
+      stream.end()
+
+    it 'should optionally use plugin options', (done) ->
+      fakeFile = createFakeFile('[X] check')
+      stream = markdownIt({
+        plugins: [['markdown-it-checkbox',{divWrap: true}]]
+      })
+
+      stream.on 'data', (newFile) ->
+        newFile.contents.toString().should.equal(
+          '<p><div class="checkbox">'+
+          '<input type="checkbox" id="checkbox0" checked="true">'+
+          '<label for="checkbox0">check</label></div></p>\n'
+        )
         done()
 
       stream.write fakeFile

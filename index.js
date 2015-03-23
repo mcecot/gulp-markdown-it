@@ -1,7 +1,9 @@
 'use strict';
-var PluginError, createPluginError, gutil, markdownIt, markdownItPlugin, through;
+var PluginError, _, gutil, markdownIt, markdownItPlugin, through;
 
 through = require('through2');
+
+_ = require('underscore');
 
 gutil = require('gulp-util');
 
@@ -9,22 +11,26 @@ PluginError = gutil.PluginError;
 
 markdownIt = require('markdown-it');
 
-createPluginError = function(message) {
-  return new PluginError('gulp-markdown-it', message);
-};
-
-markdownItPlugin = function(opt) {
-  var i, len, md, options, plugin, plugins, preset, ref, ref1, ref2;
-  if (opt == null) {
-    opt = {};
+markdownItPlugin = function(options) {
+  var default_opt, i, len, md, plugin, ref;
+  if (options == null) {
+    options = {};
   }
-  preset = (ref = opt.preset) != null ? ref : 'default';
-  plugins = (ref1 = opt.plugins) != null ? ref1 : [];
-  options = (ref2 = opt.options) != null ? ref2 : {};
-  md = markdownIt(preset, options);
-  for (i = 0, len = plugins.length; i < len; i++) {
-    plugin = plugins[i];
-    md.use(require(plugin));
+  default_opt = {
+    preset: 'default',
+    plugins: [],
+    options: {}
+  };
+  options = _.extend(default_opt, options);
+  md = markdownIt(options.preset, options.options);
+  ref = options.plugins;
+  for (i = 0, len = ref.length; i < len; i++) {
+    plugin = ref[i];
+    if (typeof plugin === "string") {
+      md.use(require(plugin));
+    } else if (plugin.constructor === Array && plugin.length === 2) {
+      md.use(require(plugin[0]), plugin[1]);
+    }
   }
   return through.obj(function(file, encoding, callback) {
     var err;
