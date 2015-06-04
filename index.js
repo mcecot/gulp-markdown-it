@@ -19,7 +19,10 @@ markdownItPlugin = function(options) {
   default_opt = {
     preset: 'default',
     plugins: [],
-    options: {}
+    options: {},
+    configure: function() {
+      return {};
+    }
   };
   options = _.extend(default_opt, options);
   md = markdownIt(options.preset, options.options);
@@ -31,6 +34,9 @@ markdownItPlugin = function(options) {
     } else if (plugin.constructor === Array && plugin.length === 2) {
       md.use(require(plugin[0]), plugin[1]);
     }
+  }
+  if (typeof options.configure === "function") {
+    options.configure(md, options);
   }
   return through.obj(function(file, encoding, callback) {
     var err;

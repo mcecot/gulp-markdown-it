@@ -9,7 +9,8 @@ markdownItPlugin = (options = {}) ->
   default_opt =
     preset: 'default'
     plugins: []
-    options: {}
+    options: {},
+    configure: ()->{}
   options = _.extend default_opt, options
   md      = markdownIt(options.preset,options.options)
   for plugin in options.plugins
@@ -17,6 +18,9 @@ markdownItPlugin = (options = {}) ->
       md.use require(plugin)
     else if (plugin.constructor == Array && plugin.length == 2)
       md.use require(plugin[0]), plugin[1]
+
+  if(typeof options.configure == "function")
+    options.configure(md, options)
 
   through.obj (file, encoding, callback) ->
 
