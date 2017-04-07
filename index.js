@@ -46,8 +46,8 @@ markdownItPlugin = function(options) {
       file.contents = new Buffer(md.render(file.contents.toString()));
       file.path = gutil.replaceExtension(file.path, '.html');
       this.push(file);
-    } catch (_error) {
-      err = _error;
+    } catch (error) {
+      err = error;
       callback(new gutil.PluginError('gulp-markdown-it', err, {
         fileName: file.path,
         showstack: true
