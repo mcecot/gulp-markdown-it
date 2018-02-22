@@ -29,7 +29,10 @@ markdownItPlugin = function(options) {
     if (typeof plugin === "string") {
       md.use(require(plugin));
     } else if (plugin.constructor === Array && plugin.length === 2) {
-      md.use(require(plugin[0]), plugin[1]);
+      let pluginModule = (typeof plugin[0] === 'string')
+        ? require(plugin[0])
+        : plugin[0]; // Use it as is
+      md.use(pluginModule, plugin[1]);
     }
   }
   return through.obj(function(file, encoding, callback) {
